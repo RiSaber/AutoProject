@@ -1,0 +1,274 @@
+@media (max-width: 1199px) {
+	.header__inner {
+		gap: 24px;
+	}
+
+	.nav {
+		gap: 24px;
+	}
+
+	.services__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.advantages__list {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 40px 32px;
+	}
+}
+
+@media (max-width: 991px) {
+	.reviews__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.review:last-child {
+		grid-column: span 2;
+	}
+
+	:root {
+		--header-h: 68px;
+	}
+
+	.header {
+		background: rgba(var(--bg-rgb), .92);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+	}
+
+	/* Переключатель темы прижимает к правому краю себя, кнопку записи и бургер */
+	.theme-toggle {
+		margin-left: auto;
+	}
+
+	.burger {
+		display: flex;
+	}
+
+	.nav {
+		position: fixed;
+		top: var(--header-h);
+		left: 0;
+		right: 0;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0;
+		margin: 0;
+		padding: 16px 24px 28px;
+		background: var(--bg);
+		border-bottom: 1px solid var(--border);
+		box-shadow: var(--shadow-md);
+		transform: translateY(-12px);
+		opacity: 0;
+		visibility: hidden;
+		transition: transform .3s, opacity .3s, visibility .3s;
+	}
+
+	.nav.is-open {
+		transform: none;
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.nav__list {
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.nav__link {
+		display: block;
+		padding: 14px 0;
+		font-size: 1.1rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.nav__link::after {
+		display: none;
+	}
+
+	.nav__link.is-active {
+		color: var(--accent);
+	}
+
+	.nav__phone {
+		padding-top: 20px;
+		font-size: 1.2rem;
+	}
+
+	.hero {
+		min-height: auto;
+	}
+
+	.hero__inner {
+		grid-template-columns: 1fr;
+		text-align: center;
+	}
+
+	.hero__text {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.hero__actions,
+	.hero__stats {
+		justify-content: center;
+	}
+
+	.hero__photo {
+		max-width: 640px;
+		aspect-ratio: 16 / 10;
+		margin: 0 auto;
+	}
+
+	.section {
+		padding: 80px 0;
+	}
+
+	.contacts__inner {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+}
+
+@media (max-width: 767px) {
+	.services__grid,
+	.reviews__grid {
+		grid-template-columns: 1fr;
+	}
+
+	.review:last-child {
+		grid-column: auto;
+	}
+
+	.hero__stats {
+		gap: 28px;
+	}
+
+	.section__head {
+		margin-bottom: 40px;
+	}
+
+	.footer__inner {
+		flex-direction: column;
+		text-align: center;
+	}
+}
+
+@media (max-width: 575px) {
+	.container {
+		padding: 0 16px;
+	}
+
+	.header__cta {
+		display: none;
+	}
+
+	.nav {
+		padding: 8px 16px 24px;
+	}
+
+	.hero {
+		padding: calc(var(--header-h) + 32px) 0 56px;
+	}
+
+	.hero__text {
+		font-size: 1.05rem;
+	}
+
+	.hero__actions {
+		flex-direction: column;
+		margin-bottom: 40px;
+	}
+
+	.hero__actions .btn {
+		width: 100%;
+	}
+
+	.hero__stats {
+		justify-content: space-between;
+		gap: 12px;
+	}
+
+	.hero__stats b {
+		font-size: 1.4rem;
+	}
+
+	.hero__stats span {
+		font-size: .8rem;
+	}
+
+	.section {
+		padding: 64px 0;
+	}
+
+	.card {
+		padding: 24px;
+	}
+
+	.advantages__list {
+		grid-template-columns: 1fr;
+		gap: 28px;
+	}
+
+	.contacts__info .btn {
+		width: 100%;
+	}
+
+	.hero__photo {
+		aspect-ratio: 4 / 3;
+	}
+
+	.hero__photo::before {
+		inset: 12px -10px -12px 10px;
+	}
+
+	.modal__window {
+		padding: 36px 20px 24px;
+	}
+}
+
+@media (max-width: 374px) {
+	.logo {
+		font-size: 1.15rem;
+	}
+
+	.logo__icon {
+		width: 32px;
+		height: 32px;
+	}
+
+	.hero__badge {
+		font-size: .8rem;
+	}
+
+	.hero__stats {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+/* Сенсорные экраны: у поля даты своя стрелка, как у select. На десктопе остаётся системная иконка календаря */
+@media (hover: none) and (pointer: coarse) {
+	.form__field input[type="date"] {
+		-webkit-appearance: none;
+		appearance: none;
+		position: relative;
+		min-height: calc(1.6em + 28px);
+		padding-right: 44px;
+		text-align: left;
+		background: var(--bg) var(--chevron) no-repeat right 18px center / 12px 8px;
+	}
+
+	.form__field input[type="date"]::-webkit-date-and-time-value {
+		text-align: left;
+	}
+
+	/* Системный индикатор невидим, но растянут на всё поле: тап в любом месте открывает выбор даты */
+	.form__field input[type="date"]::-webkit-calendar-picker-indicator {
+		position: absolute;
+		inset: 0;
+		width: auto;
+		height: auto;
+		opacity: 0;
+	}
+}
