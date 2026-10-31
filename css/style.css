@@ -317,7 +317,8 @@ svg {
 
 .hero {
 	position: relative;
-	min-height: 100vh;
+	/* Не выше 900px: при отдалении страницы 100vh растёт и первый экран растягивается */
+	min-height: min(100vh, 900px);
 	display: flex;
 	align-items: center;
 	padding: calc(var(--header-h) + 40px) 0 80px;
