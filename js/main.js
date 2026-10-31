@@ -7,6 +7,9 @@
 	const modal = document.getElementById("booking");
 	const form = document.getElementById("booking-form");
 	const success = document.getElementById("booking-success");
+	const modalWindow = modal.querySelector(".modal__window");
+	// Всё, что под модалкой: на время её показа недоступно для фокуса, клика и диктора
+	const background = [header, document.querySelector("main"), document.querySelector(".footer")];
 	let lastFocused = null;
 
 	document.getElementById("year").textContent = new Date().getFullYear();
@@ -90,6 +93,7 @@
 		if (service) form.elements.service.value = service;
 		modal.hidden = false;
 		document.body.classList.add("is-locked");
+		background.forEach((el) => (el.inert = true));
 		setMenu(false);
 		form.elements.name.focus();
 	}
@@ -97,7 +101,24 @@
 	function closeModal() {
 		modal.hidden = true;
 		document.body.classList.remove("is-locked");
+		background.forEach((el) => (el.inert = false));
 		if (lastFocused) lastFocused.focus();
+	}
+
+	// Удержание фокуса: Tab и Shift+Tab ходят по кругу внутри окна.
+	// offsetParent отсекает элементы скрытой формы или скрытого экрана успеха
+	function trapFocus(e) {
+		const focusable = [...modalWindow.querySelectorAll("button, [href], input, select, textarea")]
+			.filter((el) => !el.disabled && el.offsetParent !== null);
+		const first = focusable[0];
+		const last = focusable[focusable.length - 1];
+		if (e.shiftKey && document.activeElement === first) {
+			e.preventDefault();
+			last.focus();
+		} else if (!e.shiftKey && document.activeElement === last) {
+			e.preventDefault();
+			first.focus();
+		}
 	}
 
 	document.addEventListener("click", (e) => {
@@ -107,7 +128,15 @@
 	});
 
 	document.addEventListener("keydown", (e) => {
-		if (e.key === "Escape" && !modal.hidden) closeModal();
+		if (!modal.hidden) {
+			if (e.key === "Escape") closeModal();
+			if (e.key === "Tab") trapFocus(e);
+			return;
+		}
+		if (e.key === "Escape" && nav.classList.contains("is-open")) {
+			setMenu(false);
+			burger.focus();
+		}
 	});
 
 	// Phone mask: +7 (XXX) XXX-XX-XX
@@ -142,6 +171,7 @@
 		const field = input.closest(".form__field");
 		const message = result === true ? "" : result;
 		field.classList.toggle("has-error", Boolean(message));
+		input.setAttribute("aria-invalid", String(Boolean(message)));
 		field.querySelector(".form__error").textContent = message;
 		return !message;
 	}
@@ -158,7 +188,7 @@
 			fields.find((f) => f.closest(".has-error")).focus();
 			return;
 		}
-		// Здесь можно отправить данные на сервер: new FormData(form)
+		// Демо: серверной части нет, данные никуда не отправляются и не сохраняются
 		form.reset();
 		form.hidden = true;
 		success.hidden = false;
