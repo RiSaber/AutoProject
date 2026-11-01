@@ -2,7 +2,7 @@
 
 Лендинг автосервиса — демонстрационный проект.
 
-**Сайт:** https://risaber.github.io/my_project/
+**Сайт:** https://risaber.github.io/AutoProject/
 
 ![Главный экран](screenshots/desktop.png)
 
